@@ -5,11 +5,13 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import org.w3c.dom.Text
 
 class MainActivity : AppCompatActivity(), INotesRVAdapter {
 
@@ -17,6 +19,7 @@ class MainActivity : AppCompatActivity(), INotesRVAdapter {
     private lateinit var recyclerView: RecyclerView
     private lateinit var inputText: EditText
     private lateinit var addButton: FloatingActionButton
+    private lateinit var text: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +31,7 @@ class MainActivity : AppCompatActivity(), INotesRVAdapter {
         recyclerView = findViewById(R.id.recyclerview)
         inputText = findViewById(R.id.input)
         addButton = findViewById(R.id.addButton)
+        text = findViewById(R.id.display_text)
 
 //creating view model instance in the main activity
         viewModel = ViewModelProvider(this,
@@ -51,8 +55,16 @@ class MainActivity : AppCompatActivity(), INotesRVAdapter {
         viewModel.allNotes.observe(this, Observer {list ->
             list?.let {
                 adapter.updateList(it)
+                if(list.size==0)
+                    text.visibility = View.VISIBLE
+                else
+                    text.visibility = View.INVISIBLE
             }
         })
+
+
+
+
 
     }
 
@@ -67,6 +79,8 @@ class MainActivity : AppCompatActivity(), INotesRVAdapter {
             viewModel.insertNote(Note(noteText))
 
         }
+
+        inputText.setText("")
 
     }
 
