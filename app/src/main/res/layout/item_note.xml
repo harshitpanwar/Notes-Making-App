@@ -30,7 +30,6 @@
         android:background="?selectableItemBackground"
         android:src="@drawable/ic_outline_delete_24"
         app:layout_constraintTop_toTopOf="@+id/text"
-        app:layout_constraintBottom_toBottomOf="@+id/text"
         app:layout_constraintRight_toRightOf="parent"
         />
 
